@@ -20,6 +20,7 @@ class UserListAPIView(generics.ListAPIView):
     queryset = User.objects.all()
 
 
+
 class UserRetrieveAPIView(generics.RetrieveAPIView):
     """ Представление для просмотра пользователя """
     serializer_class = UserSerializer
