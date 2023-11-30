@@ -12,7 +12,7 @@ class Habit(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', **NULLABLE)
 
     place = models.CharField(max_length=100, verbose_name='Место')
-    time = models.TimeField(verbose_name='Время')
+    time = models.DateTimeField(verbose_name='Время')
     action = models.TextField(verbose_name='Действие')
     periodicity = models.PositiveIntegerField(default=1, verbose_name='Периодичность выполнения')
     time_to_complete = models.IntegerField(verbose_name='Время на выполнение, в секундах')

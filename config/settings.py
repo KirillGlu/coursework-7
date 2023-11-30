@@ -162,9 +162,20 @@ CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
 
 CELERY_TIMEZONE = 'Europe/Moscow'
 CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
+# CELERY_TASK_TIME_LIMIT = 30 * 60
 
-TG_API_KEY = os.getenv('TG_API')
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_SERIALIZER = "json"
+
+CELERY_BEAT_SCHEDULE = {
+    'task-name': {
+        'task': 'atomichabits.tasks.check_user_habits_and_send',
+        'schedule': timedelta(seconds=10),
+    },
+}
+
+TG_API = os.getenv('TG_API')
 TG_URL = os.getenv('TG_URL')
 CHAT_ID = os.getenv('CHAT_ID')
 

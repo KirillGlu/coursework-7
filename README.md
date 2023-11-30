@@ -59,8 +59,8 @@ Atomic Habits - это веб-приложение, разработанное �
 **Запустите Celery для асинхронной обработки задач, таких как отправка уведомлений:**
   
   ```bash
-  celery -A atomic_habits worker -l info -P eventlet
-  celery -A atomic_habits beat
+  celery -A atomichabits worker -l info -P eventlet
+  celery -A atomichabits beat
   ```
 
 
