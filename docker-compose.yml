@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+  db:
+    image: postgres
+    container_name: habits_db
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis
+    container_name: habits_redis
+
+  app:
+    container_name: habits_app
+    depends_on:
+      - db
+      - redis
+    build: .
+    tty: true
+    command: sh -c "python manage.py migrate && python manage.py runserver 127.0.0.1:8000"
+    ports:
+      - '8000:8000'
+    volumes:
+      - .:/code
+
+  celery:
+    build: .
+    depends_on:
+      - app
+    tty: true
+    container_name: app_celery
+    command: celery -A config worker -l INFO
+
+  celery-beat:
+    build: .
+    container_name: app_celery_beat
+    tty: true
+    command: celery -A config beat -l INFO -S django
+    depends_on:
+      - app
