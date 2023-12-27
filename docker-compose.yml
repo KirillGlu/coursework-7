@@ -4,10 +4,8 @@ services:
     image: postgres
     container_name: habits_db
     environment:
-      - POSTGRES_PASSWORD=mysecretpassword
       - PGDATA=/var/lib/postgresql/data/pgdata
-    ports:
-      - "5432:5432"
+    env_file: .env
 
   redis:
     image: redis
