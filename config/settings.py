@@ -93,11 +93,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATABASES_NAME'),
-        'USER': os.getenv('DATABASES_USER'),
-        'PASSWORD': os.getenv("DATABASES_PASSWORD"),
-        'HOST': os.getenv('DATABASES_HOST'),
-        'PORT': os.getenv('DATABASES_PORT'),
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
     }
 }
 
@@ -157,6 +157,11 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': os.getenv('CACHES_LOCATION'), }}
+
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
 
@@ -180,16 +185,9 @@ TG_URL = os.getenv('TG_URL')
 CHAT_ID = os.getenv('CHAT_ID')
 
 CORS_ALLOWED_ORIGINS = [
-    'https://localhost:8000',
-    'https://10.2.3.16:8000',
+    "https://read-only.example.com",
+    "https://read-and-write.example.com",
 ]
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://localhost:8000',
-    'https://10.2.3.16:8000',
-]
-
-CORS_ALLOW_ALL_ORIGINS = False
 
 # Настройка для доступа back-end
 CSRF_TRUSTED_ORIGINS = [
