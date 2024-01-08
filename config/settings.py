@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from datetime import timedelta
 from pathlib import Path
+from urllib.parse import urlsplit
+
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,10 +30,11 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
-
 DOMAIN_NAME = os.getenv('DOMAIN_NAME')
+
+ALLOWED_HOSTS = [urlsplit(DOMAIN_NAME).hostname]
+
+
 
 # Application definition
 
@@ -163,7 +166,7 @@ CACHES = {
         'LOCATION': os.getenv('CACHES_LOCATION'), }}
 
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
-CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_BROKER_URL")
 
 CELERY_TIMEZONE = 'Europe/Moscow'
 CELERY_TASK_TRACK_STARTED = True
